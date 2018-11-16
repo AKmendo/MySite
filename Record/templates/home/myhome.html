@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}myhome{% endblock %}
+{% block content %}
+<div class="col-md-6 column">
+    <h3 class="text-center">我加入的房间</h3>
+    {% for text in HomeList %}
+    {% for tag in text.roommates.all %}
+    {% ifequal request.session.user_name tag.user_name %}
+
+    <div class="col-md-4 column">
+        <h3>
+            <a href="/homelist/{{ text.id }}/">{{ text.home_name }}</a>
+        </h3>
+
+        创建者：<button type="button" class="btn btn-xs btn-info"">{{ text.create_user }}</button>|
+            {% ifequal text.permission per %}
+            状态：<button type="
+            button" class="btn btn-xs btn-success">{{ text.get_permission_display }}</button>
+        {% else %}
+        状态：<button type="button" class="btn btn-xs btn-danger">{{ text.get_permission_display }}</button>
+        {% endifequal %}
+        <br />
+        室友：{% for tag in text.roommates.all %}
+        {{ tag }} |
+        {% endfor %}
+        <br />
+        {% ifequal text.home_states status %}
+        房间信息：<button type="button" class="btn btn-xs btn-warning">{{ text.get_home_states_display }}</button>
+        {% else %}
+        房间信息：<button type="button" class="btn btn-xs btn-success"">{{ text.get_home_states_display }}</button>
+            {% endifequal %}
+            <br />
+            创建时间：{{ text.c_time }}
+            <a class="
+            btn" href="/homelist/{{ text.id }}/">进入房间 »</a>
+    </div>
+    {% endifequal %}
+    {% endfor %}
+    {% endfor %}
+</div>
+<div class="col-md-6 column">
+    <h3 class="text-center">我创建的房间</h3>
+    {% for text in HomeList %}
+    {% ifequal text.create_user request.session.user_name %}
+    <div class="col-md-4 column">
+        <h3>
+            <a href="/homelist/{{ text.id }}/">{{ text.home_name }}</a>
+        </h3>
+
+        创建者：<button type="button" class="btn btn-xs btn-info"">{{ text.create_user }}</button>|
+        {% ifequal text.permission per %}
+        状态：<button type="
+            button" class="btn btn-xs btn-success">{{ text.get_permission_display }}</button>
+        {% else %}
+        状态：<button type="button" class="btn btn-xs btn-danger">{{ text.get_permission_display }}</button>
+        {% endifequal %}
+        <br />
+        室友：{% for tag in text.roommates.all %}
+        {{ tag }} |
+        {% endfor %}
+        <br />
+        {% ifequal text.home_states status %}
+        房间信息：<button type="button" class="btn btn-xs btn-warning">{{ text.get_home_states_display }}</button>
+        {% else %}
+        房间信息：<button type="button" class="btn btn-xs btn-success"">{{ text.get_home_states_display }}</button>
+        {% endifequal %}
+        <br />
+        创建时间：{{ text.c_time }}
+        <a class="
+            btn" href="/homelist/{{ text.id }}/">进入房间 »</a>
+    </div>
+    {% endifequal %}
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% block title %}房间{% endblock %}
+{% block content %}
+{% if request.session.is_login %}
+<div class="col-md-8 column">
+    <div class="row clearfix">
+        {% if expense_view %}
+        <h3>消费记录</h3>
+        <table class="table table-hover">
+            <caption>我的支付记录</caption>
+            <thead>
+                <tr>
+                    <th>支付人</th>
+                    <th>共同使用人</th>
+                    <th>支付方式</th>
+                    <th>金额(元)</th>
+                    <th>状态</th>
+                    <th>备注</th>
+                    <th>时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Expense in Expense_V %}
+                {% ifequal Expense.pay_user request.session.user_name %}
+                <tr class="success">
+                    <td>{{ Expense.pay_user }}</td>
+                    <td>{% for Tg in Expense.join_user.all %}{{ Tg }} &nbsp; {% endfor %}</td>
+                    <td>{{ Expense.get_pay_way_display }}</td>
+                    <td>{{ Expense.money }}</td>
+                    <td>{{ Expense.get_pay_state_display }}</td>
+                    <td>{{ Expense.Comment }}</td>
+                    <td>{{ Expense.date_time }}</td>
+                </tr>
+                {% endifequal %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="col-lg-5  pull-right">
+            <a class="btn btn-success" href="/record/" role="button">记一笔</a>
+        </div>
+        <br />
+        <br />
+        <table class="table table-hover">
+            <caption>全部支付记录</caption>
+            <thead>
+                <tr>
+                    <th>支付人</th>
+                    <th>共同使用人</th>
+                    <th>支付方式</th>
+                    <th>金额(元)</th>
+                    <th>状态</th>
+                    <th>备注</th>
+                    <th>时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for home_roommates in all_roommates %}
+                {% for Expense in Expense_V %}
+                {% ifequal Expense.pay_user home_roommates.user_name %}
+                <tr class="success">
+                    <td>{{ Expense.pay_user }}</td>
+                    <td>{% for Tg in Expense.join_user.all %}{{ Tg }} &nbsp; {% endfor %}</td>
+                    <td>{{ Expense.get_pay_way_display }}</td>
+                    <td>{{ Expense.money }}</td>
+                    <td>{{ Expense.get_pay_state_display }}</td>
+                    <td>{{ Expense.Comment }}</td>
+                    <td>{{ Expense.date_time }}</td>
+                </tr>
+                {% endifequal %}
+                {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>留言板</h3>
+        {% for com in home_comment %}
+        <button type="button" class="btn btn-xs btn-info"">{{ com.leave_user }}</button>说：
+    {{ com.leave_word }}
+    {{ com.leave_time }}
+    <br />
+    <br />
+    {% endfor %}
+    <h3>添加留言</h3>
+        <form class='form-register' action="
+            ." method="post">
+            {% if message %}
+            <div class="alert alert-warning">{{ message }}</div>
+            {% endif %}
+
+            {% csrf_token %}
+            <div class="form-group">
+                {{ comment_form.leave_user.label_tag }}
+                {{ comment_form.leave_user}}
+            </div>
+            <div class="form-group">
+                {{ comment_form.leave_word.label_tag }}
+                {{ comment_form.leave_word}}
+            </div>
+
+            <button type="reset" class="btn btn-default pull-left">重新输入</button>
+            <button type="submit" class="btn btn-primary pull-right">提交</button>
+
+            </form>
+    </div>
+</div>
+
+<div class="col-md-4 column">
+    <h3 class="text-center">详细信息</h3>
+    房间名：<a href="/homelist/{{ homeinfo.id }}/">{{ homeinfo.home_name }}</a>
+    <br />
+    创建者：<button type="button" class="btn btn-xs btn-info"">{{ homeinfo.create_user }}</button>|
+    {% ifequal homeinfo.permission per %}
+    状态：<button type="
+        button" class="btn btn-xs btn-success">{{ homeinfo.get_permission_display }}</button>
+    {% else %}
+    状态：<button type="button" class="btn btn-xs btn-danger">{{ homeinfo.get_permission_display }}</button>
+    {% endifequal %}
+    <br />
+    室友：{% for tag in homeinfo.roommates.all %}
+    {{ tag }} |
+    {% endfor %}
+    <br />
+    {% ifequal homeinfo.home_states status %}
+    房间信息：<button type="button" class="btn btn-xs btn-warning">{{ homeinfo.get_home_states_display }}</button>
+    {% else %}
+    房间信息：<button type="button" class="btn btn-xs btn-success"">{{ homeinfo.get_home_states_display }}</button>
+    {% endifequal %}
+    <br />
+    创建时间：{{ homeinfo.c_time }}
+</div>
+        {% else %}
+        {% ifequal homeinfo.permission per %}
+        <h3>留言板</h3>
+        {% for com in home_comment %}
+        <button type="
+        button" class="btn btn-xs btn-info"">{{ com.leave_user }}</button>说：
+    {{ com.leave_word }}
+    {{ com.leave_time }}
+    <br />
+    <br />
+    {% endfor %}
+    <h3>添加留言</h3>
+        <form class='form-register' action="
+        ." method="post">
+        {% if message %}
+        <div class="alert alert-warning">{{ message }}</div>
+        {% endif %}
+
+        {% csrf_token %}
+        <div class="form-group">
+            {{ comment_form.leave_user.label_tag }}
+            {{ comment_form.leave_user}}
+        </div>
+        <div class="form-group">
+            {{ comment_form.leave_word.label_tag }}
+            {{ comment_form.leave_word}}
+        </div>
+
+        <button type="reset" class="btn btn-default pull-left">重新输入</button>
+        <button type="submit" class="btn btn-primary pull-right">提交</button>
+
+        </form>
+</div>
+</div>
+
+<div class="col-md-4 column">
+    <h3 class="text-center">详细信息</h3>
+    房间名：<a href="/homelist/{{ homeinfo.id }}/">{{ homeinfo.home_name }}</a>
+    <br />
+    创建者：<button type="button" class="btn btn-xs btn-info"">{{ homeinfo.create_user }}</button>|
+    {% ifequal homeinfo.permission per %}
+    状态：<button type="
+        button" class="btn btn-xs btn-success">{{ homeinfo.get_permission_display }}</button>
+    {% else %}
+    状态：<button type="button" class="btn btn-xs btn-danger">{{ homeinfo.get_permission_display }}</button>
+    {% endifequal %}
+    <br />
+    室友：{% for tag in homeinfo.roommates.all %}
+    {{ tag }} |
+    {% endfor %}
+    <br />
+    {% ifequal homeinfo.home_states status %}
+    房间信息：<button type="button" class="btn btn-xs btn-warning">{{ homeinfo.get_home_states_display }}</button>
+    {% else %}
+    房间信息：<button type="button" class="btn btn-xs btn-success"">{{ homeinfo.get_home_states_display }}</button>
+    {% endifequal %}
+    <br />
+    创建时间：{{ homeinfo.c_time }}
+</div>
+        {% endifequal %}
+        {% endif %}
+        {% endif %}
+{% endblock %}
