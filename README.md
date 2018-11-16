@@ -1,2 +1,2 @@
 # MySite
-Django搭建记账小站
+Django搭建记账网站
