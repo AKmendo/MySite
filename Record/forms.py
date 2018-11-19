@@ -27,7 +27,7 @@ class RegisterForm(forms.Form):
         attrs={'class': 'form-control'}))
     email = forms.EmailField(label="邮箱地址", widget=forms.EmailInput(
         attrs={'class': 'form-control'}))
-    sex = forms.ChoiceField(label='性别', choices=SEX_CHOICES)
+    sex = forms.ChoiceField(label='性别', choices=SEX_CHOICES,widget=forms.RadioSelect)
     captcha = CaptchaField(label='验证码')
 
 
@@ -44,10 +44,10 @@ class HomeForm(forms.Form):
         attrs={'class': 'form-control'}))
     create_user = forms.CharField(label="创建人", max_length=128, widget=forms.TextInput(
         attrs={'class': 'form-control'}))
-    permission = forms.ChoiceField(label='权限', choices=PER_CHOICES)
+    permission = forms.ChoiceField(label='权限', choices=PER_CHOICES,widget=forms.RadioSelect)
     roommates = forms.ModelMultipleChoiceField(
         label="室友", queryset=User.objects.all(), widget=forms.CheckboxSelectMultiple())
-    home_states = forms.ChoiceField(label='状态', choices=STA_CHOICES)
+    home_states = forms.ChoiceField(label='状态', choices=STA_CHOICES,widget=forms.RadioSelect)
 
 
 class HomeMailForm(forms.Form):
@@ -72,13 +72,31 @@ class ExpenseForm(forms.Form):
     join_user = forms.ModelMultipleChoiceField(
         label="共同使用人", queryset=User.objects.all(), widget=forms.CheckboxSelectMultiple())
     pay_way = forms.ChoiceField(
-        label='支付方式', choices=PAY_WAY)
+        label='支付方式', choices=PAY_WAY,widget=forms.RadioSelect)
     money = forms.DecimalField(label="金额(元)", max_digits=100, decimal_places=2, widget=forms.TextInput(
         attrs={'class': 'form-control'}))
     pay_state = forms.ChoiceField(
-        label='结算状态', choices=PAY_CHOICES)
+        label='结算状态', choices=PAY_CHOICES,widget=forms.RadioSelect)
     Comment = forms.CharField(label='备注', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
     date_time = forms.DateTimeField(label="时间", widget=forms.DateTimeInput(
         attrs={'class': 'form-control'}))
     captcha = CaptchaField(label='验证码')
+
+
+class ExpenseModelForm(forms.ModelForm):
+    class Meta:
+        model = Expense
+        fields = ['pay_user', 'join_user', 'pay_way',
+                  'money', 'pay_state', 'Comment']
+        widgets = {
+            'pay_user': forms.TextInput(attrs={'class': 'form-control'}),
+            'join_user': forms.CheckboxSelectMultiple(),
+            'pay_way': forms.RadioSelect,
+            'money': forms.TextInput(attrs={'class': 'form-control'}),
+            'pay_state': forms.RadioSelect,
+            'Comment': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ExpenseModelForm, self).__init__(*args, **kwargs)

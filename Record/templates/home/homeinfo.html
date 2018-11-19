@@ -17,6 +17,7 @@
                     <th>状态</th>
                     <th>备注</th>
                     <th>时间</th>
+                    <th>操作</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,13 +31,14 @@
                     <td>{{ Expense.get_pay_state_display }}</td>
                     <td>{{ Expense.Comment }}</td>
                     <td>{{ Expense.date_time }}</td>
+                    <td><a class="btn btn-xs btn-success" href="/myexpense/{{ Expense.id }}" role="button">修改</a>  &nbsp; <a class="btn btn-xs btn-success" href="/DeleteExpense/{{ Expense.id }}" role="button">删除</a></td>
                 </tr>
                 {% endifequal %}
                 {% endfor %}
             </tbody>
         </table>
         <div class="col-lg-5  pull-right">
-            <a class="btn btn-success" href="/record/" role="button">记一笔</a>
+            <a class="btn btn-success btn-sm" href="/record/" role="button">记一笔</a>
         </div>
         <br />
         <br />
@@ -71,6 +73,7 @@
                 {% endfor %}
             </tbody>
         </table>
+
         <h3>留言板</h3>
         {% for com in home_comment %}
         <button type="button" class="btn btn-xs btn-info"">{{ com.leave_user }}</button>说：

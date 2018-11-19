@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block title %}我的消费记录{% endblock %}
+{% block content %}
+<h2 class="text-center">我的支付记录</h2>
+<div class="col-md-6 column">
+    <div class="row clearfix">
+        <h3 class="text-center">我支付的</h3>
+        <table class="table table-hover">
+            <caption>已支付</caption>
+            <thead>
+                <tr>
+                    <th>支付人</th>
+                    <th>共同使用人</th>
+                    <th>支付方式</th>
+                    <th>金额(元)</th>
+                    <th>状态</th>
+                    <th>备注</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Expense in Expense_V %}
+                {% ifequal Expense.pay_user request.session.user_name %}
+                <tr class="success">
+                    <td>{{ Expense.pay_user }}</td>
+                    <td>{% for Tg in Expense.join_user.all %}{{ Tg }} &nbsp; {% endfor %}</td>
+                    <td>{{ Expense.get_pay_way_display }}</td>
+                    <td>{{ Expense.money }}</td>
+                    <td>{{ Expense.get_pay_state_display }}</td>
+                    <td>{{ Expense.Comment }}</td>
+                    <td>{{ Expense.date_time }}</td>
+                    <td><a class="btn btn-xs btn-success" href="/myexpense/{{ Expense.id }}" role="button">修改</a>
+                        &nbsp; <a class="btn btn-xs btn-success" href="/DeleteExpense/{{ Expense.id }}" role="button">删除</a></td>
+                </tr>
+                {% endifequal %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="col-lg-5  pull-right">
+            <a class="btn btn-success btn-sm" href="/record/" role="button">记一笔</a>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 column">
+    <div class="row clearfix">
+        <h3 class="text-center">待结算的</h3>
+        <table class="table table-hover">
+            <caption>待结算</caption>
+            <thead>
+                <tr>
+                    <th>支付人</th>
+                    <th>共同使用人</th>
+                    <th>支付方式</th>
+                    <th>金额(元)</th>
+                    <th>状态</th>
+                    <th>备注</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Expense in Expense_V %}
+                {% ifequal Expense.pay_user request.session.user_name %}
+                {% ifequal Expense.pay_state paychiocse1 %}
+                <tr class="warning">
+                    <td>{{ Expense.pay_user }}</td>
+                    <td>{% for Tg in Expense.join_user.all %}{{ Tg }} &nbsp; {% endfor %}</td>
+                    <td>{{ Expense.get_pay_way_display }}</td>
+                    <td>{{ Expense.money }}</td>
+                    <td>{{ Expense.get_pay_state_display }}</td>
+                    <td>{{ Expense.Comment }}</td>
+                    <td>{{ Expense.date_time }}</td>
+                    <td><a class="btn btn-xs btn-success" href="/myexpense/{{ Expense.id }}" role="button">修改</a>
+                        &nbsp; <a class="btn btn-xs btn-success" href="/DeleteExpense/{{ Expense.id }}" role="button">删除</a></td>
+                </tr>
+                {% endifequal %}
+                {% endifequal %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12 column">
+        <div class="row clearfix">
+            <h3 class="text-center">已结算的</h3>
+            <table class="table table-hover">
+                <caption>已结算</caption>
+                <thead>
+                    <tr>
+                        <th>支付人</th>
+                        <th>共同使用人</th>
+                        <th>支付方式</th>
+                        <th>金额(元)</th>
+                        <th>状态</th>
+                        <th>备注</th>
+                        <th>时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Expense in Expense_V %}
+                    {% ifequal Expense.pay_user request.session.user_name %}
+                    {% ifequal Expense.pay_state paychiocse2 %}
+                    <tr class="info">
+                        <td>{{ Expense.pay_user }}</td>
+                        <td>{% for Tg in Expense.join_user.all %}{{ Tg }} &nbsp; {% endfor %}</td>
+                        <td>{{ Expense.get_pay_way_display }}</td>
+                        <td>{{ Expense.money }}</td>
+                        <td>{{ Expense.get_pay_state_display }}</td>
+                        <td>{{ Expense.Comment }}</td>
+                        <td>{{ Expense.date_time }}</td>
+                        <td><a class="btn btn-xs btn-success" href="/myexpense/{{ Expense.id }}" role="button">修改</a>
+                            &nbsp; <a class="btn btn-xs btn-success" href="/DeleteExpense/{{ Expense.id }}" role="button">删除</a></td>
+                    </tr>
+                    {% endifequal %}
+                    {% endifequal %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

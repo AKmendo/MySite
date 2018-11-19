@@ -75,11 +75,37 @@ def record(request):
                 for tag in join_user:
                     new_Expense.join_user.add(tag)
                 new_Expense.save()
-                return redirect('/')  # 自动跳转到主页
+                return redirect('/myhome/')  # 自动跳转到主页
         record_form = ExpenseForm()
         return render(request, 'expense/record.html', locals())
     else:
         return redirect('/')
+
+
+def ChangeExpense(request, exp_id):
+    if request.session.get('is_login', None):
+        expenseinfo = Expense.objects.get(pk=exp_id)
+        if request.method == "POST":
+            record_form = ExpenseModelForm(request.POST, instance=expenseinfo)
+            if record_form.is_valid():
+                record_form.save()
+                return redirect('/myexpense_list/')
+        record_form = ExpenseModelForm(instance=expenseinfo)
+        return render(request, 'expense/expense_ch.html', locals())
+
+
+def DeleteExpense(request, del_id):
+    if request.session.get('is_login', None):
+        Expense_V = Expense.objects.all().order_by("-date_time")
+        Expense.objects.get(pk=del_id).delete()
+        return render(request, 'expense/myexpense.html', locals())
+
+
+def MyExpense(request):
+    Expense_V = Expense.objects.all().order_by("-date_time")
+    paychiocse1='no'
+    paychiocse2='yes'
+    return render(request, 'expense/myexpense.html', locals())
 
 
 def login(request):

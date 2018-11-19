@@ -11,4 +11,7 @@ urlpatterns = [
     path('createhome/',views.createhome,name='createhome'),
     path('homelist/<int:id>/', views.Homeinfo, name='Homeinfo'),
     path('myhome/',views.MyHome,name='myhome'),
+    path('myexpense/<int:exp_id>/',views.ChangeExpense,name='changeexpense'),
+    path('myexpense_list/',views.MyExpense,name='myexpense'),
+    path('DeleteExpense/<int:del_id>/',views.DeleteExpense,name='delete')
 ]
