@@ -27,4 +27,4 @@
 ![主页](https://raw.githubusercontent.com/Toykang/MySite/master/Image/index.PNG)
 
 ## LICENSE
-[LICENSE](https://raw.githubusercontent.com/Toykang/MySite/master/LICENSE)
+[LICENSE](https://github.com/Toykang/MySite/blob/master/LICENSE)
