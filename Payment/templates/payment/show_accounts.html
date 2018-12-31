@@ -1,0 +1,65 @@
+{% extends 'base/base.html' %}
+{% block title %}主页{% endblock %}
+{% load static %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'css/payment.css' %}">
+{% endblock %}
+
+{% block sidebar %}
+<nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light hidden-xs sidebar">
+    <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+            <a class="nav-link" href="/index/">所有记录
+                <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/myexpense_list/">我的记录</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/accounts/">结算结果</a>
+        </li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h3>结算结果</h3>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>信息类型</th>
+                <th>总金额(元)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>待结算(总)</td>
+                <td>{{ Sum_n }}</td>
+            </tr>
+            <tr>
+                <td>待结算(全员总)</td>
+                <td>{{ Sum_n_a }}</td>
+            </tr>
+            <tr>
+                <td>待结算(非全员总)</td>
+                <td>{{ Sum_n_na }}</td>
+            </tr>
+            <tr>
+                <td>已结算(总)</td>
+                <td>{{ Sum_y }}</td>
+            </tr>
+            <tr>
+                <td>已结算(全员总)</td>
+                <td>{{ Sum_y_a }}</td>
+            </tr>
+            <tr>
+                <td>已结算(非全员总)</td>
+                <td>{{ Sum_y_na }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- /container -->
+{% endblock %}

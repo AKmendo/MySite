@@ -1,17 +1,23 @@
+"""Record URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/2.1/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
 from django.contrib import admin
-from django.urls import path
-from Record import views
-app_name = 'Record'
+from django.urls import path,include
+
 urlpatterns = [
-    path('', views.index,name='index'),
-    path('login/',views.login,name='login'),
-    path('record/',views.record,name='record'),
-    path('register/', views.register,name='register'),
-    path('logout/', views.logout,name='logout'),
-    path('createhome/',views.createhome,name='createhome'),
-    path('homelist/<int:id>/', views.Homeinfo, name='Homeinfo'),
-    path('myhome/',views.MyHome,name='myhome'),
-    path('myexpense/<int:exp_id>/',views.ChangeExpense,name='changeexpense'),
-    path('myexpense_list/',views.MyExpense,name='myexpense'),
-    path('DeleteExpense/<int:del_id>/',views.DeleteExpense,name='delete')
+    path('admin/', admin.site.urls),
+    path('',include('Payment.urls')),
+    path('captcha', include('captcha.urls')),
 ]

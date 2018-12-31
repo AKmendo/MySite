@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+{% block title %}详细信息{% endblock %}
+{% load static %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'css/payment.css' %}">
+{% endblock %}
+
+{% block content %}
+<h3>账单详细信息</h3>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>类型</th>
+                <th>信息</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>支付人</td>
+                <td>{{ Expenses.pay_user }}</td>
+            </tr>
+            <tr>
+                <td>共同使用人</td>
+                <td>{% for Tg in Expenses.join_user.all %}{{ Tg }} &nbsp; {% endfor %}</td>
+            </tr>
+            <tr>
+                <td>支付方式</td>
+                <td>{{ Expenses.get_pay_way_display }}</td>
+            </tr>
+            <tr>
+                <td>金额(元)</td>
+                <td>{{ Expenses.money }}</td>
+            </tr>
+            <tr>
+                <td>状态</td>
+                <td>{{ Expenses.get_pay_state_display }}</td>
+            </tr>
+            <tr>
+                <td>备注</td>
+                <td>{{ Expenses.Comment }}</td>
+            </tr>
+            <tr>
+                <td>时间</td>
+                <td>{{ Expenses.date_time }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% block title %}帮助{% endblock %}
+{% load static %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'css/payment.css' %}">
+{% endblock %}
+{% block content %}
+<h2>必要的注意</h2>
+<div class="card">
+    <h5 class="card-title">一、关于时间的填写</h5>
+    <div class="card-body">
+        <p>填写格式为：2018-12-01 12:00 &nbsp;<mark>①注意时间是使用英文输入法的冒号</mark></p>
+    </div>
+</div>
+<div class="card">
+    <h5 class="card-title">二、注意修改已结算账单</h5>
+    <div class="card-body">
+        <p>账单结算后需修改结算状态为&nbsp;已结算</p>
+    </div>
+</div>
+<div class="card">
+    <h5 class="card-title">三、搜索关键词</h5>
+    <div class="card-body">
+        <p>搜索关键词为相应用户名，列表中的支付人。</p>
+    </div>
+</div>
+{% endblock %}
