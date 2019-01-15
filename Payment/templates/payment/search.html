@@ -27,8 +27,12 @@
                 <td><a href="/expenses/{{ Expense.id }}" >{{ Expense.money }}</a></td>
                 <td>{{ Expense.get_pay_state_display }}</td>
                 <td>{{ Expense.date_time }}</td>
+                {% ifequal Expense.pay_user request.session.user_name %}
                 <td><a class="btn btn-sm btn-success" href="/myexpense/{{ Expense.id }}" role="button">修改</a>
                     &nbsp; <a class="btn btn-sm btn-danger" href="/DeleteExpense/{{ Expense.id }}" role="button">删除</a></td>
+                {% else %}
+                <td>无操作权限</td>
+                {% endifequal %}
             </tr>
             {% endifequal %}
             {% endfor %}
