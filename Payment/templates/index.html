@@ -8,9 +8,11 @@
 {% block content %}
 <h3>图表分析</h3>
 <hr />
+<div class="container-fluid">
+    <div class="row">
 <div class="col-md-6">
     <section class="row text-center placeholders">
-        <div id="main" style="width: 600px;height: 350px;"></div>
+        <div id="main" style="width: 500px;height: 350px;"></div>
         <script type="text/javascript">
             var myChart = echarts.init(document.getElementById('main'));
             var option = {
@@ -85,7 +87,7 @@
 </div>
 <div class="col-md-6">
     <section class="row text-center placeholders">
-        <div id="main2" style="width: 600px;height: 350px;"></div>
+        <div id="main2" style="width: 600px;height: 370px;"></div>
         <script type="text/javascript">
             var myChart2 = echarts.init(document.getElementById('main2'));
             var option2 = {
@@ -113,7 +115,9 @@
         </script>
     </section>
 </div>
-<div class="col-12">
+</div>
+</div>
+<div class="container-fluid">
     <h3>所有记录</h3>
     <hr />
     <div class="table-responsive">
