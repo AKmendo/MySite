@@ -3,7 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404
 # Create your views here.
 from django.shortcuts import get_object_or_404, redirect, render
-
+from haystack.views import SearchView
 from .forms import *
 from .models import *
 
@@ -57,23 +57,10 @@ def index(request):
 def help(request):
     return render(request,'help/help.html')
 
-def search(request):
-    S = request.GET.get('S')
-    paychiocse1='no'
-    search_msg = ''
-    if not S:
-        search_msg = '请输入关键词!'
-        return render(request, 'payment/search.html', locals())
-    else:
-        user_list=User.objects.values_list("user_name",flat=True)
-        print(user_list)
-        if S in user_list:
-            search_msg = '搜索结果'
-            search_list = Expense.objects.order_by("-date_time").filter(pay_user=S)
-            return render(request, 'payment/search.html',locals())
-        else:
-            search_msg = '请输入正确的关键词!'
-            return render(request, 'payment/search.html', locals())
+class MySeachView(SearchView):
+    def extra_context(self):
+        context = super(MySeachView,self).extra_context()
+        return context
 
 def Show_accounts(request):
     if request.session.get('is_login', None):

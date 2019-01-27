@@ -1,0 +1,6 @@
+{{ object.pay_user }}
+{{ object.get_pay_way_display }}
+{{ object.money }}
+{{ object.Comment }}
+{{ object.get_pay_state_display }}
+{{ object.date_time }}

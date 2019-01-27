@@ -12,6 +12,18 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+#全文检索(whoosh)
+HAYSTACK_CONNECTIONS = {
+'default': {
+'ENGINE': 'Payment.whoosh_cn_backend.WhooshEngine',
+'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
+},
+}
+#设置分页显示的数据量
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
+#自动更新索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -39,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Payment.apps.PaymentConfig',#支付应用
     'captcha',#验证码
+    'haystack',#全文检索
 ]
 
 MIDDLEWARE = [

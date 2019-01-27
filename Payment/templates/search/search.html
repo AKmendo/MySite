@@ -1,0 +1,58 @@
+{% extends 'base/base.html' %}
+{% block title %}查询{% endblock %}
+{% load static %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'css/payment.css' %}">
+{% endblock %}
+{% block content %}
+<div class="col-12 col-sm-9 col-lg-9">
+    {% if query %}
+    <article class="markdown-body">
+        <h2>搜索{{ query }}的结果</h2>
+    </article>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>支付人</th>
+                    <th>金额(元)</th>
+                    <th>状态</th>
+                    <th>时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in page.object_list %}
+                <tr>
+                    <td>{{ result.object.pay_user }}</td>
+                    <td><a href="/expenses/{{ result.object.id }}">{{ result.object.money }}</a></td>
+                    <td>{{ result.object.get_pay_state_display }}</td>
+                    <td>{{ result.object.date_time }}</td>
+                </tr>
+
+                {% empty %}
+                <p>关键词{{ query }}下没有搜索到任何内容。</p>
+                <!-- /.blog-post -->
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <nav class="blog-pagination">
+        {% if page.has_previous or page.has_next %}
+        {% if page.has_previous %}
+        <a class="btn btn-outline-primary" href="?q={{ query }}&amp;page={{ page.previous_page_number }}">&laquo;
+            上一页</a>
+        {% endif %}
+        {% if page.has_next %}
+        <a class="btn btn-outline-primary" href="?q={{ query }}&amp;page={{ page.next_page_number }}">下一页
+            &raquo;</a>
+        {% endif %}
+        <a class="btn btn-outline-primary disabled">第{{ page.number }}页 ，共{{page.paginator.num_pages }}页</a>
+        {% else %}
+        <a class="btn btn-outline-primary disabled">已加载所有搜索结果！</a>
+        {% endif %}
+        {% else %}
+        {# Show some example queries to run, maybe query syntax, something else? #}
+        {% endif %}
+    </nav>
+</div>
+{% endblock %}

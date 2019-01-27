@@ -7,7 +7,6 @@ urlpatterns = [
     path('index/', views.index),
     path('page<int:page>/', views.index),
     path('help/',views.help,name='help'),
-    path('search/', views.search, name='search'),
     path('accounts/',views.Show_accounts,name='accounts'),
     path('login/',views.login,name='login'),
     path('record/',views.record,name='record'),
@@ -16,5 +15,6 @@ urlpatterns = [
     path('myexpense/<int:exp_id>/',views.ChangeExpense,name='changeexpense'),
     path('expenses/<int:exp_id>/',views.Show_info,name='expenses_info'),
     path('myexpense_list/',views.MyExpense,name='myexpense'),
-    path('DeleteExpense/<int:del_id>/',views.DeleteExpense,name='delete')
+    path('DeleteExpense/<int:del_id>/',views.DeleteExpense,name='delete'),
+    path('search/', views.MySeachView(), name='haystack_search')
 ]
