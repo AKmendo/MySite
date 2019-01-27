@@ -20,8 +20,8 @@
 ## 功能
 - [x] 账单记录、修改、删除、搜索。
 - [x] 对用户账单进行简单分析
-- [x] 计算不同账单总数
-- [x] 实时记录账单金额
+- [x] 计算分类账单总数
+- [x] 录账查询
 
 ## 运行展示
 ![主页](https://raw.githubusercontent.com/Toykang/MySite/master/Image/index.PNG)
